@@ -1,7 +1,8 @@
 
 /*
  *  Author: Scott Giles
- *  This project is to get used to using GitHub again
+ *  This project is to get used to using GitHub again. Also to get
+ *  back into the swing (;D) of using Java Graphics
  */
 
 import javax.swing.*;
