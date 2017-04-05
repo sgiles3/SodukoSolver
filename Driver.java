@@ -23,7 +23,6 @@ public class Driver extends JFrame {
 				System.out.println("Default difficulty 4");
 				Board b = new Board(9);
 				b.populate(4);
-				System.out.println("test");
 			}
 		}
 		scan.close();
