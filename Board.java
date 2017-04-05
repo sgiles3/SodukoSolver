@@ -1,5 +1,6 @@
 /*
  * Author: Scott Giles
+ * This code manages the game board
  */
 public class Board {
 

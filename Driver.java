@@ -4,18 +4,23 @@
  *  This project is to get used to using GitHub again
  */
 
-import java.util.*;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class Driver extends JFrame {
 
 	public static void main(String[] args) {
 
-		int action = -1;
-		Scanner scan = new Scanner(System.in);
-		while (action != 0) {
-			System.exit(0);
-		}
-		scan.close();
+		// Creates a new frame
+		JFrame frame = new JFrame("SodukoSolver");
+		Soduko panel = new Soduko();
+		frame.add(panel);
+
+		// Sets frame specifications
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(500, 500);
+		frame.setVisible(true);
+		panel.setFocusable(true);
+
 	}
 }
