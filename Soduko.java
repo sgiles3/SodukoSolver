@@ -59,6 +59,14 @@ public class Soduko extends JPanel implements ActionListener, KeyListener, Compo
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		/*
+		if (e.getSource() == b3) {
+			getContentPane().removeAll();
+			getContentPane().add(panel2);// Adding to content pane, not to Frame
+			repaint();
+			printAll(getGraphics());// Extort print all content
+		}
+		*/
 		if (e.getSource() == b4) {
 			System.exit(0);
 		}

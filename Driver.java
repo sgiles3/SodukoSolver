@@ -24,4 +24,10 @@ public class Driver extends JFrame {
 		panel.setFocusable(true);
 
 	}
+
+	/*
+	 * public void switchPanels() { getContentPane().removeAll();
+	 * getContentPane().add(panel2);// Adding to content pane, not to Frame
+	 * repaint(); printAll(getGraphics());// Extort print all content }
+	 */
 }
