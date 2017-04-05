@@ -14,16 +14,7 @@ public class Driver extends JFrame {
 		int action = -1;
 		Scanner scan = new Scanner(System.in);
 		while (action != 0) {
-			System.out.println("Welcome to SodukoSolver!");
-			System.out.println("To generate a new board, enter 1.");
-			System.out.println("To quit, enter 0.");
-			action = scan.nextInt();
-			if (action == 1) {
-				System.out.println("Default size 9x9");
-				System.out.println("Default difficulty 4");
-				Board b = new Board(9);
-				b.populate(4);
-			}
+			System.exit(0);
 		}
 		scan.close();
 	}
