@@ -16,13 +16,25 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 	protected Timer t; // Used for keeping track of time for puzzle solve
 
 	// The "Soduko" is a JFrame and has panels for each local
-	protected JPanel home, settings;
-	protected JLabel l1;
-	protected JButton b1, b2, b3, b4;
+	protected JPanel home, game, solve, settings;
+	// 'h' = home, 'g' = game, 'v' = solve, 's' = settings
+	protected JLabel lh1;
+	protected JLabel lg1;
+	protected JLabel lv1;
+	protected JLabel ls1;
+	protected JButton bh1, bh2, bh3, bh4;
+	protected JButton bg1;
+	protected JButton bv1;
+	protected JButton bs1;
 
-	// Constructor
+	// Constructor - creates the home page, really
 	public Soduko() {
+		t = new Timer(1000, this);
 		homepage();
+		game();
+		solve();
+		settings();
+		add(home);
 	}
 
 	// Creates and adds home page (since it will be the first screen)
@@ -32,53 +44,130 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		home.setFocusable(true);
 		home.addKeyListener(this);
 		home.addComponentListener(this);
-		t = new Timer(1000, this);
 
-		// Adds the GUI stuff for "home page"
-		l1 = new JLabel();
-		l1.setText("SodukoSolver");
-		l1.setAlignmentX(CENTER_ALIGNMENT);
-		home.add(l1);
+		lh1 = new JLabel();
+		lh1.setText("SodukoSolver (LOGO HERE)");
+		lh1.setAlignmentX(CENTER_ALIGNMENT);
+		home.add(lh1);
 
-		b1 = new JButton();
-		b1.setText("Start Game");
-		b1.addActionListener(this);
-		b1.setAlignmentX(CENTER_ALIGNMENT);
-		home.add(b1);
+		bh1 = new JButton();
+		bh1.setText("Start Game");
+		bh1.addActionListener(this);
+		bh1.setAlignmentX(CENTER_ALIGNMENT);
+		home.add(bh1);
 
-		b2 = new JButton();
-		b2.setText("Solve Mode");
-		b2.addActionListener(this);
-		b2.setAlignmentX(CENTER_ALIGNMENT);
-		home.add(b2);
+		bh2 = new JButton();
+		bh2.setText("Solve Mode");
+		bh2.addActionListener(this);
+		bh2.setAlignmentX(CENTER_ALIGNMENT);
+		home.add(bh2);
 
-		b3 = new JButton();
-		b3.setText("Settings");
-		b3.addActionListener(this);
-		b3.setAlignmentX(CENTER_ALIGNMENT);
-		home.add(b3);
+		bh3 = new JButton();
+		bh3.setText("Settings");
+		bh3.addActionListener(this);
+		bh3.setAlignmentX(CENTER_ALIGNMENT);
+		home.add(bh3);
 
-		b4 = new JButton();
-		b4.setText("Quit");
-		b4.addActionListener(this);
-		b4.setAlignmentX(CENTER_ALIGNMENT);
-		home.add(b4);
-
-		add(home);
+		bh4 = new JButton();
+		bh4.setText("Quit");
+		bh4.addActionListener(this);
+		bh4.setAlignmentX(CENTER_ALIGNMENT);
+		home.add(bh4);
 	}
+
+	public void game() {
+		game = new JPanel();
+		game.setLayout(new BoxLayout(game, BoxLayout.PAGE_AXIS));
+		game.setFocusable(true);
+		game.addKeyListener(this);
+		game.addComponentListener(this);
+
+		lg1 = new JLabel();
+		lg1.setText("Play Mode");
+		lg1.setAlignmentX(CENTER_ALIGNMENT);
+		game.add(lg1);
+
+		bg1 = new JButton();
+		bg1.setText("Home");
+		bg1.addActionListener(this);
+		bg1.setAlignmentX(CENTER_ALIGNMENT);
+		game.add(bg1);
+	}
+
+	public void solve() {
+		solve = new JPanel();
+		solve.setLayout(new BoxLayout(solve, BoxLayout.PAGE_AXIS));
+		solve.setFocusable(true);
+		solve.addKeyListener(this);
+		solve.addComponentListener(this);
+
+		lv1 = new JLabel();
+		lv1.setText("Solve Mode");
+		lv1.setAlignmentX(CENTER_ALIGNMENT);
+		solve.add(lv1);
+
+		bv1 = new JButton();
+		bv1.setText("Home");
+		bv1.addActionListener(this);
+		bv1.setAlignmentX(CENTER_ALIGNMENT);
+		solve.add(bv1);
+	}
+
+	public void settings() {
+		settings = new JPanel();
+		settings.setLayout(new BoxLayout(settings, BoxLayout.PAGE_AXIS));
+		settings.setFocusable(true);
+		settings.addKeyListener(this);
+		settings.addComponentListener(this);
+
+		ls1 = new JLabel();
+		ls1.setText("Settings");
+		ls1.setAlignmentX(CENTER_ALIGNMENT);
+		settings.add(ls1);
+
+		bs1 = new JButton();
+		bs1.setText("Home");
+		bs1.addActionListener(this);
+		bs1.setAlignmentX(CENTER_ALIGNMENT);
+		settings.add(bs1);
+	}
+
+	// Follow code for where each button is located
+	// For example: bh1 = "button" "home" <button #1>
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == b3) {
+		if (e.getSource() == bh1) {
+			getContentPane().removeAll();
+			getContentPane().add(game);
+			repaint();
+			printAll(getGraphics());
+		}
+
+		if (e.getSource() == bh2) {
+			getContentPane().removeAll();
+			getContentPane().add(solve);
+			repaint();
+			printAll(getGraphics());
+		}
+
+		if (e.getSource() == bh3) {
 			getContentPane().removeAll();
 			getContentPane().add(settings);
 			repaint();
 			printAll(getGraphics());
 		}
 
-		if (e.getSource() == b4) {
+		if (e.getSource() == bh4) {
 			System.exit(0);
+		}
+
+		if (e.getSource() == bg1 || e.getSource() == bv1 || e.getSource() == bs1) {
+			getContentPane().removeAll();
+			getContentPane().add(home);
+			repaint();
+			printAll(getGraphics());
 		}
 	}
 
