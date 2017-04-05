@@ -7,6 +7,7 @@
  * This code handles the GUI
  */
 
+import java.awt.FlowLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -16,7 +17,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 	protected Timer t; // Used for keeping track of time for puzzle solve
 
 	// The "Soduko" is a JFrame and has panels for each local
-	protected JPanel home, game, solve, settings;
+	protected JPanel home, game, solve, settings, board;
 	// 'h' = home, 'g' = game, 'v' = solve, 's' = settings
 	protected JLabel lh1;
 	protected JLabel lg1;
@@ -77,7 +78,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 
 	public void game() {
 		game = new JPanel();
-		game.setLayout(new BoxLayout(game, BoxLayout.PAGE_AXIS));
+		game.setLayout(new FlowLayout());
 		game.setFocusable(true);
 		game.addKeyListener(this);
 		game.addComponentListener(this);
@@ -96,7 +97,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 
 	public void solve() {
 		solve = new JPanel();
-		solve.setLayout(new BoxLayout(solve, BoxLayout.PAGE_AXIS));
+		solve.setLayout(new FlowLayout());
 		solve.setFocusable(true);
 		solve.addKeyListener(this);
 		solve.addComponentListener(this);
@@ -134,7 +135,6 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 
 	// Follow code for where each button is located
 	// For example: bh1 = "button" "home" <button #1>
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -222,5 +222,8 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500, 500);
 		frame.setVisible(true);
+		Board b = new Board(9);
+		b.populate(1);
+		b.p();
 	}
 }
