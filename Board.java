@@ -12,6 +12,8 @@ public class Board {
 	private int difficulty;
 	private int values[][];
 	private Stack<Integer> s = new Stack<Integer>();
+	private List<Integer> seen = new LinkedList<Integer>();
+	private List<Integer> unseen = new LinkedList<Integer>();
 
 	private Random rand = new Random();
 
@@ -25,6 +27,8 @@ public class Board {
 		switch (boardnum) {
 		case 1:
 			board1();
+			boolean r = check();
+			System.out.println(r);
 			break;
 
 		default:
@@ -58,6 +62,44 @@ public class Board {
 				}
 			}
 		}
+	}
+
+	// Checks to see if the entire board is valid
+	public boolean check() {
+		popUnseen();
+		// Checks rows
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(r) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+			popUnseen();
+			seen.clear();
+		}
+		// Checks columns
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (seen.contains(values[j][i])) {
+					System.out.println("(c) ERROR at (" + j + "," + i + ") on " + values[j][i]);
+					System.out.println("Unseen:");
+					System.out.println(unseen.toString());
+					System.out.println("Seen:");
+					System.out.println(seen.toString());
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+			popUnseen();
+			seen.clear();
+		}
+		return true;
 	}
 
 	// MAY BE BROKEN
@@ -183,6 +225,17 @@ public class Board {
 	}
 
 	public void board1() {
+		// 1 2 3 | 4 5 6 | 7 8 9
+		// 4 5 6 | 7 8 9 | 1 2 3
+		// 7 8 9 | 1 2 3 | 4 5 6
+		// ——— - - - - - - - -
+		// 2 3 1 | 5 6 4 | 8 9 7
+		// 5 6 4 | 8 9 7 | 2 3 1
+		// 8 9 7 | 2 3 1 | 5 6 4
+		// ——— -------------
+		// 3 1 2 | 6 4 5 | 9 7 8
+		// 6 4 5 | 9 7 8 | 3 1 2
+		// 9 7 8 | 3 1 2 | 6 4 5
 		values[0][0] = 1;
 		values[0][1] = 2;
 		values[0][2] = 3;
@@ -264,17 +317,14 @@ public class Board {
 		values[8][6] = 6;
 		values[8][7] = 4;
 		values[8][8] = 5;
-		// 1 2 3 | 4 5 6 | 7 8 9
-		// 4 5 6 | 7 8 9 | 1 2 3
-		// 7 8 9 | 1 2 3 | 4 5 6
-		// ——— - - - - - - - -
-		// 2 3 1 | 5 6 4 | 8 9 7
-		// 5 6 4 | 8 9 7 | 2 3 1
-		// 8 9 7 | 2 3 1 | 5 6 4
-		// ——— -------------
-		// 3 1 2 | 6 4 5 | 9 7 8
-		// 6 4 5 | 9 7 8 | 3 1 2
-		// 9 7 8 | 3 1 2 | 6 4 5
+	}
+
+	public void popUnseen() {
+		for (int i = 1; i <= size; i++) {
+			unseen.add(i);
+		}
+		System.out.println("Reset Unseen");
+		System.out.println(unseen.toString());
 	}
 
 	// Prints board to console (testing only)
