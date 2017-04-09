@@ -450,8 +450,8 @@ public class Board {
 		for (int i = 1; i <= size; i++) {
 			unseen.add(i);
 		}
-		System.out.println("Reset Unseen");
-		System.out.println(unseen.toString());
+		// System.out.println("Reset Unseen");
+		// System.out.println(unseen.toString());
 	}
 
 	// Prints board to console (testing only)
@@ -481,6 +481,10 @@ public class Board {
 			}
 			s.push(j);
 		}
+	}
+
+	public int[][] getBoard() {
+		return values;
 	}
 
 	public int getNum() {

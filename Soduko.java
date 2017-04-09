@@ -28,8 +28,13 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 	protected JButton bv1;
 	protected JButton bs1;
 
+	protected Board b;
+	protected int[][] values;
+
 	// Constructor - creates the home page, really
-	public Soduko() {
+	public Soduko(Board b) {
+		this.b = b;
+		values = b.getBoard();
 		t = new Timer(1000, this);
 		homepage();
 		game();
@@ -76,6 +81,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		home.add(bh4);
 	}
 
+	// Screen with the game on it
 	public void game() {
 		game = new JPanel();
 		game.setLayout(new FlowLayout());
@@ -93,8 +99,10 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		bg1.addActionListener(this);
 		bg1.setAlignmentX(CENTER_ALIGNMENT);
 		game.add(bg1);
+
 	}
 
+	// Screen with the solve mode on it
 	public void solve() {
 		solve = new JPanel();
 		solve.setLayout(new FlowLayout());
@@ -114,6 +122,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		solve.add(bv1);
 	}
 
+	// Settings
 	public void settings() {
 		settings = new JPanel();
 		settings.setLayout(new BoxLayout(settings, BoxLayout.PAGE_AXIS));
@@ -217,13 +226,13 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 	// Made more sense after I made the decision to have multiple JPanels
 	// changing on the same Frame
 	public static void main(String[] args) {
-		Soduko frame = new Soduko();
+		Board b = new Board(9);
+		b.populate(1);
+		b.p();
+		Soduko frame = new Soduko(b);
 		frame.setTitle("SodukoSolver");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500, 500);
 		frame.setVisible(true);
-		Board b = new Board(9);
-		b.populate(1);
-		b.p();
 	}
 }
