@@ -92,13 +92,140 @@ public class Board {
 					System.out.println(seen.toString());
 					return false;
 				} else {
-					unseen.remove(new Integer(values[i][j]));
-					seen.add(values[i][j]);
+					unseen.remove(new Integer(values[j][i]));
+					seen.add(values[j][i]);
 				}
 			}
 			popUnseen();
 			seen.clear();
 		}
+		// Checks boxes
+		// I
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(I) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+		}
+		popUnseen();
+		seen.clear();
+		// II
+		for (int i = 0; i < 3; i++) {
+			for (int j = 3; j < 6; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(II) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+		}
+		popUnseen();
+		seen.clear();
+		// III
+		for (int i = 0; i < 3; i++) {
+			for (int j = 6; j < 9; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(III) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+		}
+		popUnseen();
+		seen.clear();
+		// IV
+		for (int i = 3; i < 6; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(IV) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+		}
+		popUnseen();
+		seen.clear();
+		// V
+		for (int i = 3; i < 6; i++) {
+			for (int j = 3; j < 6; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(V) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+		}
+		popUnseen();
+		seen.clear();
+		// VI
+		for (int i = 3; i < 6; i++) {
+			for (int j = 6; j < 9; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(VI) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+		}
+		popUnseen();
+		seen.clear();
+		// VII
+		for (int i = 6; i < 9; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(VII) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+		}
+		popUnseen();
+		seen.clear();
+		// VIII
+		for (int i = 6; i < 9; i++) {
+			for (int j = 3; j < 6; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(VIII) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+		}
+		popUnseen();
+		seen.clear();
+		// IX
+		for (int i = 6; i < 9; i++) {
+			for (int j = 6; j < 9; j++) {
+				if (seen.contains(values[i][j])) {
+					System.out.println("(IX) ERROR at (" + i + "," + j + ") on " + values[i][j]);
+					return false;
+				} else {
+					unseen.remove(new Integer(values[i][j]));
+					seen.add(values[i][j]);
+				}
+			}
+		}
+		popUnseen();
+		seen.clear();
 		return true;
 	}
 
@@ -267,8 +394,8 @@ public class Board {
 		values[3][1] = 3;
 		values[3][2] = 1;
 		values[3][3] = 5;
-		values[3][4] = 4;
-		values[3][5] = 6;
+		values[3][4] = 6;
+		values[3][5] = 4;
 		values[3][6] = 8;
 		values[3][7] = 9;
 		values[3][8] = 7;
