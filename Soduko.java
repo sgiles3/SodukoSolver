@@ -8,6 +8,8 @@
  */
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+//import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -24,17 +26,25 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 	protected JLabel lv1;
 	protected JLabel ls1;
 	protected JButton bh1, bh2, bh3, bh4;
-	protected JButton bg1;
+	protected JButton bg1, bg2;
 	protected JButton bv1;
 	protected JButton bs1;
 
+	protected boolean paint = false; // True if the graphics need to be used
+	// (Play and Solve)
+
 	protected Board b;
 	protected int[][] values;
+	protected int[][] userValues;
+
+	// This is a 2D array that will hold separate panels for the board
+	protected JPanel[][] gameBoard;
 
 	// Constructor - creates the home page, really
 	public Soduko(Board b) {
 		this.b = b;
 		values = b.getBoard();
+		userValues = b.modify();
 		t = new Timer(1000, this);
 		homepage();
 		game();
@@ -81,18 +91,46 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		home.add(bh4);
 	}
 
+	// Used for drawing the board (Play and Solve modes)
+	/*
+	 * public void paintComponent(Graphics g) { System.out.println("HERE"); if
+	 * (paint) { g.drawRect(getWidth() / 2, getHeight() / 2, 50, 50); } }
+	 */
+
 	// Screen with the game on it
 	public void game() {
 		game = new JPanel();
-		game.setLayout(new FlowLayout());
+		game.setLayout(new GridLayout(12, 11));
 		game.setFocusable(true);
 		game.addKeyListener(this);
 		game.addComponentListener(this);
+
+		// Temp is a space holder for the GridLayout
+		JLabel temp = new JLabel();
+		game.add(temp);
+		temp = new JLabel();
+		game.add(temp);
 
 		lg1 = new JLabel();
 		lg1.setText("Play Mode");
 		lg1.setAlignmentX(CENTER_ALIGNMENT);
 		game.add(lg1);
+
+		temp = new JLabel();
+		game.add(temp);
+		temp = new JLabel();
+		game.add(temp);
+
+		bg2 = new JButton();
+		bg2.setText("Check");
+		bg2.addActionListener(this);
+		bg2.setAlignmentX(CENTER_ALIGNMENT);
+		game.add(bg2);
+
+		temp = new JLabel();
+		game.add(temp);
+		temp = new JLabel();
+		game.add(temp);
 
 		bg1 = new JButton();
 		bg1.setText("Home");
@@ -100,6 +138,53 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		bg1.setAlignmentX(CENTER_ALIGNMENT);
 		game.add(bg1);
 
+		temp = new JLabel();
+		game.add(temp);
+		temp = new JLabel();
+		game.add(temp);
+
+		// Initialize gameBoard panels
+		gameBoard = new JPanel[b.getSize() + 2][b.getSize() + 2];
+		for (int i = 0; i < gameBoard.length; i++) {
+			for (int j = 0; j < gameBoard.length; j++) {
+				gameBoard[i][j] = new JPanel();
+				game.add(gameBoard[i][j]);
+			}
+		}
+		int offseti = 0;
+		int offsetj = 0;
+		for (int i = 0; i < gameBoard.length; i++) {
+			if (i == 3 || i == 7) {
+				for (int j = 0; j < gameBoard.length; j++) {
+					JLabel l = new JLabel();
+					l.setText("___");
+					gameBoard[i][j].add(l);
+				}
+				offseti++;
+			} else {
+				for (int j = 0; j < gameBoard.length; j++) {
+					System.out.println("i = " + i + "; j = " + j);
+					System.out.println("offseti = " + offseti + "; offsetj = " + offsetj);
+					if (j == 3 || j == 7) {
+						JLabel l = new JLabel();
+						l.setText("|");
+						gameBoard[i][j].add(l);
+						offsetj++;
+					} else {
+						if (userValues[i - offseti][j - offsetj] != 0) {
+							JLabel l = new JLabel();
+							l.setText((String.valueOf(userValues[i - offseti][j - offsetj])));
+							gameBoard[i][j].add(l);
+						} else {
+							JTextField t = new JTextField();
+							t.setText("0");
+							gameBoard[i][j].add(t);
+						}
+					}
+				}
+				offsetj = 0;
+			}
+		}
 	}
 
 	// Screen with the solve mode on it
@@ -150,6 +235,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		if (e.getSource() == bh1) {
 			getContentPane().removeAll();
 			getContentPane().add(game);
+			paint = true;
 			repaint();
 			printAll(getGraphics());
 		}
@@ -157,6 +243,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		if (e.getSource() == bh2) {
 			getContentPane().removeAll();
 			getContentPane().add(solve);
+			paint = true;
 			repaint();
 			printAll(getGraphics());
 		}
@@ -164,6 +251,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		if (e.getSource() == bh3) {
 			getContentPane().removeAll();
 			getContentPane().add(settings);
+			paint = false;
 			repaint();
 			printAll(getGraphics());
 		}
@@ -172,9 +260,21 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 			System.exit(0);
 		}
 
+		// Check button
+		if (e.getSource() == bg2) {
+			b.setUserValues(userValues);
+			System.out.println("Checking for 0's");
+			System.out.println(b.checkZeros());
+			if (b.checkZeros()) {
+				System.out.println("Checking board");
+				System.out.println(b.check(b.getUserVals()));
+			}
+		}
+
 		if (e.getSource() == bg1 || e.getSource() == bv1 || e.getSource() == bs1) {
 			getContentPane().removeAll();
 			getContentPane().add(home);
+			paint = false;
 			repaint();
 			printAll(getGraphics());
 		}

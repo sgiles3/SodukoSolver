@@ -11,6 +11,7 @@ public class Board {
 	private int size; // The dimensions of the board - must be divisible by 3
 	private int difficulty;
 	private int values[][];
+	private int userValues[][];
 	private Stack<Integer> s = new Stack<Integer>();
 	private List<Integer> seen = new LinkedList<Integer>();
 	private List<Integer> unseen = new LinkedList<Integer>();
@@ -27,7 +28,7 @@ public class Board {
 		switch (boardnum) {
 		case 1:
 			board1();
-			boolean r = check();
+			boolean r = check(this.values);
 			System.out.println(r);
 			break;
 
@@ -64,8 +65,46 @@ public class Board {
 		}
 	}
 
+	// Randomizes values to delete from board
+	public int[][] modify() {
+		userValues = new int[size][size];
+		switch (difficulty) {
+		case 1:
+			break;
+
+		// Default removes ~%50 of numbers
+		// (very easy just for testing right now)
+		default:
+			userValues = values;
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size; j++) {
+					if ((i + j) % 2 == 0) {
+						userValues[i][j] = 0;
+					}
+				}
+			}
+			System.out.println("Modified Board:");
+			pUV();
+			break;
+		}
+		return userValues;
+	}
+
+	// Checks for 0's (user hasn't entered a value)
+	public boolean checkZeros() {
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (userValues[i][j] == 0) {
+					System.out.println("(0) ERROR at (" + i + "," + j + ") - values is blank");
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	// Checks to see if the entire board is valid
-	public boolean check() {
+	public boolean check(int[][] values) {
 		popUnseen();
 		// Checks rows
 		for (int i = 0; i < size; i++) {
@@ -473,6 +512,29 @@ public class Board {
 		}
 	}
 
+	// Prints userValues to console (testing only)
+	public void pUV() {
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				System.out.print(userValues[i][j] + " ");
+				if ((j + 1) % 3 == 0 && j + 1 != 9) {
+					System.out.print(" | ");
+				}
+			}
+			if ((i + 1) % 3 == 0 && i + 1 != 9) {
+				System.out.println();
+				for (int j = 0; j < size; j++) {
+					System.out.print("_ _");
+				}
+			}
+			System.out.println();
+		}
+	}
+	
+	public int[][] getUserVals() {
+		return userValues;
+	}
+
 	public void populateStack() {
 		for (int i = 0; i < size; i++) {
 			int j = rand.nextInt(9) + 1;
@@ -490,6 +552,10 @@ public class Board {
 	public int getNum() {
 		int r = s.pop();
 		return r;
+	}
+
+	public void setUserValues(int[][] newValues) {
+		this.userValues = newValues;
 	}
 
 	public int getSize() {
