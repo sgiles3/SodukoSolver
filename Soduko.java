@@ -39,6 +39,8 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 
 	// This is a 2D array that will hold separate panels for the board
 	protected JPanel[][] gameBoard;
+	protected JTextField[] input; // Holds the JTextFields on gameBoard
+	protected int a = 0; // Counter for input[]
 
 	// Constructor - creates the home page, really
 	public Soduko(Board b) {
@@ -46,6 +48,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		values = b.getBoard();
 		userValues = b.modify();
 		t = new Timer(1000, this);
+		input = new JTextField[b.getSize() * b.getSize()];
 		homepage();
 		game();
 		solve();
@@ -178,6 +181,9 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 						} else {
 							JTextField t = new JTextField();
 							t.setText("0");
+							t.addActionListener(this);
+							input[a] = t;
+							a++;
 							gameBoard[i][j].add(t);
 						}
 					}
@@ -231,7 +237,6 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 	// For example: bh1 = "button" "home" <button #1>
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		if (e.getSource() == bh1) {
 			getContentPane().removeAll();
 			getContentPane().add(game);
@@ -277,6 +282,22 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 			paint = false;
 			repaint();
 			printAll(getGraphics());
+		}
+
+		for (int i = 0; i < input.length; i++) {
+			if (e.getSource() == input[i]) {
+				System.out.println("GOT IT FAM");
+				updateUserValues();
+			}
+		}
+	}
+
+	// Updates the User Values (in Soduko.java) when I text field is edited
+	private void updateUserValues() {
+		for (int i = 0; i < gameBoard.length; i++) {
+			for (int j = 0; j < gameBoard.length; j++) {
+				
+			}
 		}
 	}
 
