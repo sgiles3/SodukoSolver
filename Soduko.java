@@ -166,8 +166,9 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 				offseti++;
 			} else {
 				for (int j = 0; j < gameBoard.length; j++) {
-					System.out.println("i = " + i + "; j = " + j);
-					System.out.println("offseti = " + offseti + "; offsetj = " + offsetj);
+					// System.out.println("i = " + i + "; j = " + j);
+					// System.out.println("offseti = " + offseti + "; offsetj =
+					// " + offsetj);
 					if (j == 3 || j == 7) {
 						JLabel l = new JLabel();
 						l.setText("|");
@@ -267,6 +268,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 
 		// Check button
 		if (e.getSource() == bg2) {
+			updateUserValues();
 			b.setUserValues(userValues);
 			System.out.println("Checking for 0's");
 			System.out.println(b.checkZeros());
@@ -286,6 +288,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 
 		for (int i = 0; i < input.length; i++) {
 			if (e.getSource() == input[i]) {
+				updateUserValues();
 				System.out.println("GOT IT FAM");
 				updateUserValues();
 			}
@@ -294,9 +297,12 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 
 	// Updates the User Values (in Soduko.java) when I text field is edited
 	private void updateUserValues() {
-		for (int i = 0; i < gameBoard.length; i++) {
-			for (int j = 0; j < gameBoard.length; j++) {
-				
+		int b = 0;
+		for (int i = 0; i < userValues.length; i++) {
+			for (int j = 0; j < userValues.length; j++) {
+				if (userValues[i][j] == 0) {
+					userValues[i][j] = Integer.parseInt(input[b].getText());
+				}
 			}
 		}
 	}
