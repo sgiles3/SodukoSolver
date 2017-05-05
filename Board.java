@@ -91,8 +91,8 @@ public class Board {
 			for (int j = 0; j < userValues.length; j++) {
 				userValues[0][j] = 0;
 			}
-			System.out.println("Modified Board:");
-			pUV();
+			//System.out.println("Modified Board:");
+			//pUV();
 			break;
 		}
 		return userValues;
@@ -122,6 +122,23 @@ public class Board {
 			}
 		}
 		return true;
+	}
+	
+	// Returns the coordinates of the first error found
+	public int[] getError() {
+		int[] error = new int[2];
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (values[i][j] != userValues[i][j] || userValues[i][j] == 0) {
+					error[0] = i;
+					error[1] = j;
+					return error;
+				}
+			}
+		}
+		error[0] = -1;
+		error[1] = -1;
+		return error;
 	}
 
 	// Checks to see if the entire board is valid

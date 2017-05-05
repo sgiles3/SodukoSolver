@@ -7,6 +7,7 @@
  * This code handles the GUI
  */
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 //import java.awt.*;
@@ -271,11 +272,30 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 			updateUserValues();
 			b.setUserValues(userValues);
 			System.out.println("Checking for 0's");
-			b.pUV();
+			//b.pUV();
 			System.out.println(b.checkZeros());
 			if (b.checkZeros()) {
 				System.out.println("Checking board");
 				System.out.println(b.check());
+				if (!b.check()) {
+					int[] error = b.getError();
+					int i = error[0];
+					int j = error[1];
+					if (i == -1 || j == -1) {
+						System.out.println("ERROR WITH ERROR FUNCTION");
+					} else {
+						input[i][j].setBackground(Color.red);
+					}
+				}
+			} else {
+				int[] error = b.getError();
+				int i = error[0];
+				int j = error[1];
+				if (i == -1 || j == -1) {
+					System.out.println("ERROR WITH ERROR FUNCTION");
+				} else {
+					input[i][j].setBackground(Color.red);
+				}
 			}
 		}
 
