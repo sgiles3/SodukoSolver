@@ -39,7 +39,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 
 	// This is a 2D array that will hold separate panels for the board
 	protected JPanel[][] gameBoard;
-	protected JTextField[] input; // Holds the JTextFields on gameBoard
+	protected JTextField[][] input; // Holds the JTextFields on gameBoard
 	protected int a = 0; // Counter for input[]
 
 	// Constructor - creates the home page, really
@@ -48,7 +48,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		values = b.getBoard();
 		userValues = b.modify();
 		t = new Timer(1000, this);
-		input = new JTextField[b.getSize() * b.getSize()];
+		input = new JTextField[b.getSize() * b.getSize()][b.getSize() * b.getSize()];
 		homepage();
 		game();
 		solve();
@@ -183,7 +183,7 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 							JTextField t = new JTextField();
 							t.setText("0");
 							t.addActionListener(this);
-							input[a] = t;
+							input[i - offseti][j - offsetj] = t;
 							a++;
 							gameBoard[i][j].add(t);
 						}
@@ -271,10 +271,11 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 			updateUserValues();
 			b.setUserValues(userValues);
 			System.out.println("Checking for 0's");
+			b.pUV();
 			System.out.println(b.checkZeros());
 			if (b.checkZeros()) {
 				System.out.println("Checking board");
-				System.out.println(b.check(b.getUserVals()));
+				System.out.println(b.check());
 			}
 		}
 
@@ -287,21 +288,25 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		}
 
 		for (int i = 0; i < input.length; i++) {
-			if (e.getSource() == input[i]) {
-				updateUserValues();
-				System.out.println("GOT IT FAM");
-				updateUserValues();
+			for (int j = 0; j < gameBoard.length; j++) {
+				if (e.getSource() == input[i][j]) {
+					updateUserValues();
+					System.out.println("GOT IT FAM");
+					updateUserValues();
+				}
 			}
 		}
 	}
 
 	// Updates the User Values (in Soduko.java) when I text field is edited
 	private void updateUserValues() {
-		int b = 0;
+		// int b = 0;
 		for (int i = 0; i < userValues.length; i++) {
 			for (int j = 0; j < userValues.length; j++) {
-				if (userValues[i][j] == 0) {
-					userValues[i][j] = Integer.parseInt(input[b].getText());
+				if (input[i][j] != null) {
+					if (Integer.parseInt(input[i][j].getText()) != 0) {
+						userValues[i][j] = Integer.parseInt(input[i][j].getText());
+					}
 				}
 			}
 		}

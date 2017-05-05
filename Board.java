@@ -28,8 +28,8 @@ public class Board {
 		switch (boardnum) {
 		case 1:
 			board1();
-			boolean r = check(this.values);
-			System.out.println(r);
+			// boolean r = check();
+			// System.out.println(r);
 			break;
 
 		default:
@@ -39,7 +39,7 @@ public class Board {
 	}
 
 	// Should populate a random board
-	// BROKEN8
+	// BROKEN
 	public void populate(boolean random, int difficulty) {
 		this.difficulty = difficulty;
 		for (int i = 0; i < values.length; i++) {
@@ -69,12 +69,9 @@ public class Board {
 	public int[][] modify() {
 		userValues = new int[size][size];
 		switch (difficulty) {
-		case 1:
-			break;
-
-		// Default removes ~%50 of numbers
+		// Case 1 removes ~%50 of numbers
 		// (very easy just for testing right now)
-		default:
+		case 1:
 			userValues = values;
 			for (int i = 0; i < size; i++) {
 				for (int j = 0; j < size; j++) {
@@ -82,6 +79,17 @@ public class Board {
 						userValues[i][j] = 0;
 					}
 				}
+			}
+			System.out.println("Modified Board:");
+			pUV();
+			break;
+
+		// Default removes first row of numbers
+		// (very easy just for testing right now)
+		default:
+			userValues = values;
+			for (int j = 0; j < userValues.length; j++) {
+				userValues[0][j] = 0;
 			}
 			System.out.println("Modified Board:");
 			pUV();
@@ -96,6 +104,19 @@ public class Board {
 			for (int j = 0; j < size; j++) {
 				if (userValues[i][j] == 0) {
 					System.out.println("(0) ERROR at (" + i + "," + j + ") - values is blank");
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	// A better check method - compares user values to actual values
+	public boolean check() {
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (values[i][j] != userValues[i][j]) {
+					System.out.println("ERROR at (" + i + "," + j + ") on " + userValues[i][j]);
 					return false;
 				}
 			}
@@ -530,7 +551,7 @@ public class Board {
 			System.out.println();
 		}
 	}
-	
+
 	public int[][] getUserVals() {
 		return userValues;
 	}
