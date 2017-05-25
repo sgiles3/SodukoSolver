@@ -7,7 +7,6 @@
  * This code handles the GUI
  */
 
-
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -269,6 +268,13 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 		}
 
 		// Check button
+		for (int i = 0; i < input.length; i++) {
+			for (int j = 0; j < input.length; j++) {
+				if (b.checkIJ(i, j)) {
+					colorIndex(i, j);
+				}
+			}
+		}
 		if (e.getSource() == bg2) {
 			updateUserValues();
 			b.setUserValues(userValues);
@@ -331,6 +337,11 @@ public class Soduko extends JFrame implements ActionListener, KeyListener, Compo
 				}
 			}
 		}
+	}
+
+	// Colors an index green (if it is correct)
+	public void colorIndex(int i, int j) {
+		input[i][j].setBackground(Color.green);
 	}
 
 	@Override

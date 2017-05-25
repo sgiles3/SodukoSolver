@@ -91,8 +91,8 @@ public class Board {
 			for (int j = 0; j < userValues.length; j++) {
 				userValues[0][j] = 0;
 			}
-			//System.out.println("Modified Board:");
-			//pUV();
+			// System.out.println("Modified Board:");
+			// pUV();
 			break;
 		}
 		return userValues;
@@ -111,6 +111,16 @@ public class Board {
 		return true;
 	}
 
+	// Checks a specific index
+	public boolean checkIJ(int i, int j) {
+		if (values[i][j] != userValues[i][j]) {
+			System.out.println("ERROR at (" + i + "," + j + ") on " + userValues[i][j]);
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	// A better check method - compares user values to actual values
 	public boolean check() {
 		for (int i = 0; i < size; i++) {
@@ -123,7 +133,7 @@ public class Board {
 		}
 		return true;
 	}
-	
+
 	// Returns the coordinates of the first error found
 	public int[] getError() {
 		int[] error = new int[2];
