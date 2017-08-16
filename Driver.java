@@ -23,7 +23,7 @@ public class Driver {
 			
 			if (action == 1) {
 				TextBoard b = new TextBoard(9);
-				b.demo();
+				b.populate();
 				b.p();
 			}
 		}
